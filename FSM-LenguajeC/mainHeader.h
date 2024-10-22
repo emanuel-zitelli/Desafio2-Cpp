@@ -23,7 +23,7 @@ typedef struct
 
 
 void cambiarSemaforo(Estado* estado, short int verde, short int amarillo, short int rojo);
-void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado* anteriorPrincipal, Tiempo tiempoPrincipal);
-void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundario, Estado* anteriorSecundaria, Tiempo tiempoSecundaria);
+void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado* anteriorPrincipal, Tiempo tiempoPrincipal, Estado* estadoSecundario);
+void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundario, Estado* anteriorSecundaria, Tiempo tiempoSecundaria, Estado* estadoPrincipal);
 
 #endif //MAINHEADER_H

@@ -32,9 +32,8 @@ int main()
 
     while(1)
     {
-        
-        semaforoPrincipal(&timerPrincipal, &estadoPrincipal, &anteriorPrincipal, tiempoPrincipal);
-        semaforoSecundario(&timerSecundaria, &estadoSecundaria, &anteriorSecundaria, tiempoSecundaria);
+        semaforoPrincipal(&timerPrincipal, &estadoPrincipal, &anteriorPrincipal, tiempoPrincipal, &estadoSecundaria);
+        semaforoSecundario(&timerSecundaria, &estadoSecundaria, &anteriorSecundaria, tiempoSecundaria, &estadoPrincipal);
         timerPrincipal++;
         timerSecundaria++;
 

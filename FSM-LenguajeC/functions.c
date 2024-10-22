@@ -7,7 +7,7 @@ void cambiarSemaforo(Estado* estado, short int verde, short int amarillo, short 
     (*estado).rojo=rojo;
 }
 
-void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado* anteriorPrincipal, Tiempo tiempoPrincipal)
+void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado* anteriorPrincipal, Tiempo tiempoPrincipal, Estado* estadoSecundario)
 {
     if((*estadoPrincipal).verde == 1) 
     {
@@ -38,18 +38,16 @@ void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado
     else if((*estadoPrincipal).rojo == 1)
     {
         printf("Estado Carretera Principal: Rojo, timer: %i \n", *timer);
-        if((*timer)+1>tiempoPrincipal.rojo)
+        if((*estadoSecundario).rojo == 1)
         {
-            
             *timer = 0;
             *anteriorPrincipal = *estadoPrincipal;
             cambiarSemaforo(estadoPrincipal, 0, 1, 0);
-            
         }
     }
 }
 
-void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundaria, Estado* anteriorSecundaria, Tiempo tiempoSecundaria)
+void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundaria, Estado* anteriorSecundaria, Tiempo tiempoSecundaria, Estado* estadoPrincipal )
 {
     if((*estadoSecundaria).verde == 1) 
     {
@@ -80,12 +78,11 @@ void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundaria, Esta
     else if((*estadoSecundaria).rojo == 1)
     {
         printf("Estado Carretera Secundaria: Rojo, timer %i \n", *timer);
-        if((*timer)+1>tiempoSecundaria.rojo)
+        if((*estadoPrincipal).rojo == 1)
         {
             *timer = 0;
             *anteriorSecundaria = *estadoSecundaria;
             cambiarSemaforo(estadoSecundaria, 0, 1, 0);
-            
         }
     }
 }

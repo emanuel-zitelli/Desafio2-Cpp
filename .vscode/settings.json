@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "mainheader.h": "c",
+        "windows.h": "c"
+    }
+}

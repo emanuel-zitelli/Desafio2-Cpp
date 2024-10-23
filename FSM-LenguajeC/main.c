@@ -4,8 +4,8 @@ int main()
 {
     unsigned long int timerPrincipal=1;
     unsigned long int timerSecundaria=1;
-    
-    
+    int hayAutos; //sensor
+
     Tiempo tiempoPrincipal;
     Tiempo tiempoSecundaria;
 
@@ -15,28 +15,37 @@ int main()
     Estado anteriorPrincipal;
     Estado anteriorSecundaria;
     
-    tiempoPrincipal.verde=35; //35
-    tiempoPrincipal.amarillo=5; //5
+    printf("Hay autos en la carretera secundaria? (si:1 | no:0): ");
+    scanf("%d", &hayAutos);
     
-    tiempoSecundaria.verde=15; //15
-    tiempoSecundaria.amarillo=5; //5
-
-    //tiempoPrincipal.rojo= (tiempoSecundaria.verde + tiempoSecundaria.amarillo);
-    //tiempoSecundaria.rojo= (tiempoPrincipal.verde + tiempoPrincipal.amarillo);
-
-    cambiarSemaforo(&anteriorPrincipal, 0, 0, 0);
+    if(hayAutos==true)
+    {
+        tiempoPrincipal=inicializarTiempos(tiempoPrincipal, 30, 5); 
+        cambiarSemaforo(&estadoPrincipal, 0, 0, 1); //rojo en la principal, que pasen los autos de la secundaria
+        cambiarSemaforo(&estadoSecundaria, 1, 0, 0); //verde
+    }
+    else if(hayAutos==false)
+    {
+        tiempoPrincipal = inicializarTiempos(tiempoPrincipal, 35, 5); // extiende el estado verde de la principal
+        cambiarSemaforo(&estadoPrincipal, 1, 0, 0); // verde en la principal y extendemos su estado verde
+        cambiarSemaforo(&estadoSecundaria, 0, 0, 1); // rojo en la secundaria
+    }
+    tiempoSecundaria=inicializarTiempos(tiempoSecundaria, 15, 5); //siempre el mismo tiempo
+    
+   
+    cambiarSemaforo(&anteriorPrincipal, 0, 0, 0); //hacelos que los estados anteriores sean nulos
     cambiarSemaforo(&anteriorSecundaria, 0, 0, 0);
 
-    cambiarSemaforo(&estadoPrincipal, 1, 0, 0); //verde
-    cambiarSemaforo(&estadoSecundaria, 0, 0, 1); //rojo
-
-    while(1)
+    //funcionalidad de semaforo. 
+    while(true)
     {
+        //la funcionalidad basica es la de tener un timer e ir mostrando mensajes segun su estado y el tiempo
         semaforoPrincipal(&timerPrincipal, &estadoPrincipal, &anteriorPrincipal, tiempoPrincipal, &estadoSecundaria);
         semaforoSecundario(&timerSecundaria, &estadoSecundaria, &anteriorSecundaria, tiempoSecundaria, &estadoPrincipal);
+        
+        
         timerPrincipal++;
         timerSecundaria++;
-
         
         Sleep(1000);
         system("cls");

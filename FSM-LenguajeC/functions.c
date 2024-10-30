@@ -7,12 +7,39 @@ void cambiarSemaforo(Estado* estado, short int verde, short int amarillo, short 
     (*estado).rojo=rojo;
 }
 
-Tiempo inicializarTiempos(Tiempo carretera, float verde, float amarillo)
+float validarTiempoInfSup(float limInf, float limSup) 
 {
-    carretera.verde=verde;
-    carretera.amarillo=amarillo;
+    short int flag=0;
+    float dato;
 
-    return carretera;
+    do
+    {
+        if(flag==1)
+        {
+            printf("Dato incorrecto. No puede ser menor a %.1f, o menor al tiempo en Verde del semaforo principal, que es %.1f \n", limInf, limSup);
+        }
+        flag=1;
+        scanf("%f", &dato);
+    } while (dato<limInf || dato>=limSup);
+    
+    return dato;
+}
+float validarTiempoInf(float limInf) //sobrecarga de funciones, segun el parametro va a una u otra
+{
+    short int flag=0;
+    float dato;
+
+    do
+    {
+        if(flag==1)
+        {
+            printf("El dato no puede ser menor a %.1f \n", limInf);
+        }
+        flag=1;
+        scanf("%f", &dato);
+    } while (dato<limInf);
+    
+    return dato;
 }
 
 void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado* anteriorPrincipal, Tiempo tiempoPrincipal, Estado* estadoSecundario)

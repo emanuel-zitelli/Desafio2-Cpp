@@ -15,9 +15,6 @@
 
 #include "./classes/class_Semaforo.hpp" //hereda clases padres
 
-#include "./classes/class_principal.hpp" //heredan semaforo
-#include "./classes/class_secundario.hpp"
 
-#include "./classes/class_maquinaDeEstado.hpp" //heredan principal y semaforo
 
 #endif //MAINHEADER_HPP

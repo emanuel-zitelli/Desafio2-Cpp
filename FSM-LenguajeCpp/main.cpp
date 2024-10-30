@@ -2,24 +2,29 @@
 
 int main()
 {
-    Principal prueba;
-    double timer=1;
+    Semaforo Principal;
+    Semaforo Secundaria;
+    std::string estadoPrincipal;
+    std::string estadoSecundaria;
 
-    prueba.setDuracion(5);
-    prueba.setDuracion(5);
-    prueba.setDuracion(5);
+    Principal.establecerEstado(1, 0, 0);
+    Principal.establecerTiempos(10, 5);
+
+    Secundaria.establecerEstado(0, 0, 1);
+    Secundaria.establecerTiempos(5, 5);
     
-    prueba.setEstado(true);
-
+    
     
     while(true)
-    {   prueba.rotarEstados(&timer);
-        
-        timer++;
-        std::this_thread::sleep_for(std::chrono::seconds(1)); //lo mismo que sleep en C
+    {   
+        Principal.mostrarSemaforo("Semaforo Principal: ");
+        Principal.cambiarSemaforo(&estadoPrincipal, &estadoSecundaria);
+
+        Secundaria.mostrarSemaforo("Semaforo Secundario: ");
+        Secundaria.cambiarSemaforo(&estadoSecundaria, &estadoPrincipal);
+       
+        std::this_thread::sleep_for(std::chrono::seconds(1)); //le damos una espera de 1 segundo a la ejecucion del programa
         system("cls");
     }
     return 0;
-
-    
 }

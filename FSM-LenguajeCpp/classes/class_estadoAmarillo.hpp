@@ -7,7 +7,7 @@ public:
 
     void mostrar(double* timer) override
     {
-        std::cout << "Estado: Amarilo. Cambiando en: " << duracion-(*timer)+1;
+        std::cout << "Estado: Amarillo. Cambiando en: " << duracion-(*timer)+1 << std::endl;;
     }
 
     void setDuracion(double duracionAmarillo) override

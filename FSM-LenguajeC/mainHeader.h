@@ -22,7 +22,8 @@ typedef struct
     short int rojo;
 }Estado;
 
-Tiempo inicializarTiempos(Tiempo carretera, float verde, float amarillo);
+float validarTiempoInf(float limInf);
+float validarTiempoInfSup(float limInf, float limSup);
 void cambiarSemaforo(Estado* estado, short int verde, short int amarillo, short int rojo);
 void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado* anteriorPrincipal, Tiempo tiempoPrincipal, Estado* estadoSecundario);
 void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundario, Estado* anteriorSecundaria, Tiempo tiempoSecundaria, Estado* estadoPrincipal);

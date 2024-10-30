@@ -66,14 +66,17 @@ public:
 
         else if(estadoRojo.estaActivado()==true)
         {
-            estadoRojo.mostrar(&timer);
-            timer++;
             if(*otroSemaforo == "rojo")
             {
+                
                 establecerEstado(0, 1, 0);
                 (*estadoActual)="amarillo";
                 estadoAnterior = "rojo";
+                estadoAmarillo.mostrar(&timer);
             }
+            else
+                estadoRojo.mostrar(&timer);
+            timer++;
         }
     }
 

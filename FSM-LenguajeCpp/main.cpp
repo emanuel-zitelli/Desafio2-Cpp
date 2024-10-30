@@ -2,6 +2,7 @@
 
 int main()
 {
+
     Semaforo Principal;
     Semaforo Secundaria;
     std::string estadoPrincipal;
@@ -11,8 +12,7 @@ int main()
     Principal.establecerTiempos(10, 5);
 
     Secundaria.establecerEstado(0, 0, 1);
-    Secundaria.establecerTiempos(5, 5);
-    
+    Secundaria.establecerTiempos(10, 5);
     
     
     while(true)
@@ -25,6 +25,7 @@ int main()
        
         std::this_thread::sleep_for(std::chrono::seconds(1)); //le damos una espera de 1 segundo a la ejecucion del programa
         system("cls");
+        
     }
     return 0;
 }

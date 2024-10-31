@@ -2,19 +2,15 @@
 
 int main()
 {
-
+    //semaforos
     Semaforo Principal;
     Semaforo Secundaria;
+    //sus estados en variables globales para poder transmitirselo al otro semaforo
     std::string estadoPrincipal;
     std::string estadoSecundaria;
-
-    Principal.establecerEstado(1, 0, 0);
-    Principal.establecerTiempos(10, 5);
-
-    Secundaria.establecerEstado(0, 0, 1);
-    Secundaria.establecerTiempos(10, 5);
     
     
+    inicializarSemaforo(&Principal, &Secundaria);
     while(true)
     {   
         Principal.mostrarSemaforo("Semaforo Principal: ");

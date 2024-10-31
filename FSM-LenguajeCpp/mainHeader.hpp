@@ -15,6 +15,9 @@
 
 #include "./classes/class_Semaforo.hpp" //hereda clases padres
 
-
+//funciones
+double validarTiempo(double limInf);
+double validarTiempo(double limInf, double limSup);
+void inicializarSemaforo(Semaforo* Principal, Semaforo* Secundaria);
 
 #endif //MAINHEADER_HPP

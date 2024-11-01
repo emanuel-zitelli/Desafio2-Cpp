@@ -55,7 +55,6 @@ void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado
                 *anteriorPrincipal = *estadoPrincipal; //guardamos el estado
                 cambiarSemaforo(estadoPrincipal, 0, 1, 0); //pasamos el semaforo a amarillo
             }
-        
     }
     else if((*estadoPrincipal).amarillo==1) //si esta en estado amarillo, lo mostramos por pantalla
     {   
@@ -68,9 +67,7 @@ void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado
                     cambiarSemaforo(estadoPrincipal, 0, 0, 1);
                 if((*anteriorPrincipal).rojo == 1)
                     cambiarSemaforo(estadoPrincipal, 1, 0, 0);
-                
            }
-           
     }
     else if((*estadoPrincipal).rojo == 1) //si el estado es rojo, mostramos por pantalla
     {   
@@ -87,7 +84,6 @@ void semaforoPrincipal(unsigned long int* timer, Estado* estadoPrincipal, Estado
         }
         else
             printf("Estado Carretera Principal: Rojo. Esperando al Semaforo Secundario. Tiempo Transcurrido: %lu\n", (*timer)-1);
-            
     }
 }
 
@@ -102,7 +98,6 @@ void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundaria, Esta
                 *anteriorSecundaria = *estadoSecundaria;
                 cambiarSemaforo(estadoSecundaria, 0, 1, 0);
             }
-        
     }
     else if((*estadoSecundaria).amarillo==1)
     {   
@@ -110,13 +105,11 @@ void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundaria, Esta
         if((*timer)+1>tiempoSecundaria.amarillo)
            {
                 *timer = 0;
-
                 if((*anteriorSecundaria).verde == 1)
                     cambiarSemaforo(estadoSecundaria, 0, 0, 1);
                 if((*anteriorSecundaria).rojo == 1)
                     cambiarSemaforo(estadoSecundaria, 1, 0, 0);
            }
-        
     }
     else if((*estadoSecundaria).rojo == 1)
     {
@@ -126,9 +119,7 @@ void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundaria, Esta
             *timer = 1;
             *anteriorSecundaria = *estadoSecundaria;
             cambiarSemaforo(estadoSecundaria, 0, 1, 0);
-        }
-        
-            
+        }    
     }
 }
 

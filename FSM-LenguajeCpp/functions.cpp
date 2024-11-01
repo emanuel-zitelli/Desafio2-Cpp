@@ -12,7 +12,7 @@ double validarTiempo(double limInf, double limSup)
             std::cout 
             << "Dato incorrecto. No puede ser menor a "
             << limInf
-            <<", o menor al tiempo en Verde del semaforo principal, que es" 
+            <<", o menor al tiempo en Verde del semaforo principal, que es " 
             << limSup << "\n";
         }
         flag=1;

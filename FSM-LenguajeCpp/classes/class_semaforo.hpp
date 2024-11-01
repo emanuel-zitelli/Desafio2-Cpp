@@ -28,10 +28,11 @@ public:
         timer=1; //Cuando cambiamos el Estado empieza una cuenta regresiva nueva
     }
     
-    void cambiarSemaforo(std::string* estadoActual, std::string* otroSemaforo)
+    void cambiarSemaforo(std::string* estadoActual, std::string* otroSemaforo, std::string nombreSemaforo)
     {
         if(estadoVerde.estaActivado()==true)
-        {
+        {   
+            mostrarSemaforo(nombreSemaforo);
             estadoVerde.mostrar(&timer);
             timer++;
 
@@ -45,6 +46,7 @@ public:
 
         else if(estadoAmarillo.estaActivado()==true)
         {
+            mostrarSemaforo(nombreSemaforo);
             estadoAmarillo.mostrar(&timer);
             timer++;
             if (timer > estadoAmarillo.CuantoDura())
@@ -72,10 +74,15 @@ public:
                 establecerEstado(0, 1, 0);
                 (*estadoActual)="amarillo";
                 estadoAnterior = "rojo";
+                mostrarSemaforo(nombreSemaforo);
                 estadoAmarillo.mostrar(&timer);
             }
             else
+            {
+                mostrarSemaforo(nombreSemaforo);
                 estadoRojo.mostrar(&timer);
+            }
+                
             timer++;
         }
     }

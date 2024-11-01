@@ -13,11 +13,10 @@ int main()
     inicializarSemaforo(&Principal, &Secundaria);
     while(true)
     {   
-        Principal.mostrarSemaforo("Semaforo Principal: ");
-        Principal.cambiarSemaforo(&estadoPrincipal, &estadoSecundaria);
+        
+        Principal.cambiarSemaforo(&estadoPrincipal, &estadoSecundaria, "Semaforo Principal: ");
 
-        Secundaria.mostrarSemaforo("Semaforo Secundario: ");
-        Secundaria.cambiarSemaforo(&estadoSecundaria, &estadoPrincipal);
+        Secundaria.cambiarSemaforo(&estadoSecundaria, &estadoPrincipal,"Semaforo Secundario: ");
        
         std::this_thread::sleep_for(std::chrono::seconds(1)); //le damos una espera de 1 segundo a la ejecucion del programa
         system("cls");

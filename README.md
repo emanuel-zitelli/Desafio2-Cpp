@@ -1,0 +1,6 @@
+Aquí se detallan algunos puntos claves del desafío número 2:
+
+Proceso: Se empezó por implementar un timer y que el programa respete los segundos. Era algo que nunca había implementado, por lo que tuve que investigar un poco. Luego apunté a que funcione un solo semáforo, intentando que sucedan los cambios de estado y que se muestre por pantalla. 
+Al implementar ambos semáforos tuve que rehacer parcialmente la lógica de ambos para evitar que queden en un estado "rojo-rojo". Modificando la condición de cuando se sale de Estado Rojo.
+
+Desafío enfrentado: Tratar de armar un sistema de reloj fue algo muy nuevo para mí. En especial el entender qué es una máquina de Estados, y como hacer un gráfico de ello. Llevó tiempo ir implementando todos los bloques de código, justificando las razones. Además de que hubieron casos donde tuve que retroceder el desarrollo por estar planteando alguna cuestión mal, como el de establecer que "rojo" fuese la suma del tiempo en verde y amarillo. No contaba con que la transición de estados lleva 1 segundo también (un ciclo del while) entonces no llegaban a cambiarse.

@@ -43,7 +43,6 @@ public:
                 estadoAnterior = "verde";
             }
         }
-
         else if(estadoAmarillo.estaActivado()==true)
         {
             mostrarSemaforo(nombreSemaforo);

@@ -5,7 +5,7 @@ int main()
     //semaforos
     Semaforo Principal;
     Semaforo Secundaria;
-    //sus estados en variables globales para poder transmitirselo al otro semaforo
+    //sus estados en variables accesibles a toda funcion, para poder transmitirselo al otro semaforo
     std::string estadoPrincipal;
     std::string estadoSecundaria;
     

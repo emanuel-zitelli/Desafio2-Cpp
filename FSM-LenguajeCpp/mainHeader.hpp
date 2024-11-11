@@ -15,9 +15,23 @@
 
 #include "./classes/class_Semaforo.hpp" //hereda clases padres
 
+enum estado
+{
+    Verde,
+    Amarillo,
+    Rojo
+};
+
+enum extremoCiclo
+{
+    Comienzo,
+    Fin
+};
+
 //funciones
 double validarTiempo(double limInf);
 double validarTiempo(double limInf, double limSup);
-void inicializarSemaforo(Semaforo* Principal, Semaforo* Secundaria);
+//void inicializarSemaforo(Semaforo* Principal, Semaforo* Secundaria);
+
 
 #endif //MAINHEADER_HPP

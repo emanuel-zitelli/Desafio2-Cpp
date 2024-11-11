@@ -2,7 +2,53 @@
 
 int main()
 {
-    unsigned long int timerPrincipal=1;
+    controlSemaforo controlesPrincipal;
+    controlSemaforo controlesSecundario;
+    int hayAutos;
+    
+    inicializarSemaforos(&controlesPrincipal, &controlesSecundario, &hayAutos);
+
+    while(true)
+    {
+        system("cls");
+        
+        controlesPrincipal.timer++;
+        controlesSecundario.timer++;
+
+        printf("Semaforo Principal: ");
+        semaforo(&controlesPrincipal, &controlesSecundario);
+
+        printf("\n");
+
+        printf("Semaforo Secundario: ");
+        semaforo(&controlesSecundario, &controlesPrincipal);
+
+        Sleep(1000);
+        
+    }
+    
+    return 0;
+}
+
+/*
+controlesPrincipal.timer++;
+        controlesSecundario.timer++;
+
+        printf("Semaforo Principal: ");
+        semaforo(&controlesPrincipal, &controlesSecundario);
+
+        printf("\n");
+
+        printf("Semaforo Secundario: ");
+        semaforo(&controlesSecundario, &controlesPrincipal);
+
+        Sleep(1000);
+        system("cls");
+*/
+
+
+/*
+unsigned long int timerPrincipal=1;
     unsigned long int timerSecundaria=1;
     int hayAutos; //sensor
 
@@ -65,5 +111,5 @@ int main()
         Sleep(1000);
         system("cls");
     }
-    return 0;
-}
+
+*/

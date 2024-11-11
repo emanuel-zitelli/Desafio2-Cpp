@@ -41,7 +41,7 @@ double validarTiempo(double limInf) //sobrecarga de funciones, segun el parametr
     
     return dato;
 }
-
+/*
 void inicializarSemaforo(Semaforo* Principal, Semaforo* Secundaria)
 {
     //sensor
@@ -84,4 +84,4 @@ void inicializarSemaforo(Semaforo* Principal, Semaforo* Secundaria)
         (*Principal).establecerEstado(1, 0, 0); //rojo al comienzo
         (*Secundaria).establecerEstado(0, 0, 1);
     }
-}
+}*/

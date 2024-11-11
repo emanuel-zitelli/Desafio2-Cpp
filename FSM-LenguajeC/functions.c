@@ -123,7 +123,139 @@ void semaforoSecundario(unsigned long int* timer, Estado* estadoSecundaria, Esta
     }
 }
 
+//nueva implementacion
+void moverCiclo(controlSemaforo* control, controlSemaforo* controlOtroSemaforo)
+{   
+    switch((*control).ciclo) //controla los cambios de estado, de rojo a amarillo y de amarillo a verde, y luego a la inversa
+    {
+        case 0:
+             (*control).movimiento = 1;
+             break;
+        case 2:
+            (*control).movimiento = -1;
+            break;
+    }      
+
+    switch((*control).estado[0])
+    {
+        case 'v':
+
+            if((*control).timer==(*control).tiempoEstados.verde)
+            {
+                strcpy((*control).vieneDe, "verde");
+                (*control).ciclo += (*control).movimiento;
+                (*control).timer=0;
+                (*control).autorizarCambio=0;
+            }
+            break;
+
+        case 'a':
+
+            if((*control).timer==(*control).tiempoEstados.amarillo)
+            {
+                (*control).ciclo += (*control).movimiento;
+                (*control).timer=0;
+                (*control).autorizarCambio = 1; //como voy a salir de amarillo el otro semaforo puede salir de rojo tambien
+            }
+            break;
+
+        case 'r':
+
+            if((strcmp((*controlOtroSemaforo).vieneDe,"verde")==0 && (*controlOtroSemaforo).autorizarCambio) || (*controlOtroSemaforo).timer==(*controlOtroSemaforo).tiempoEstados.amarillo && strcmp((*controlOtroSemaforo).estado, "amarillo")==0 && strcmp((*controlOtroSemaforo).vieneDe,"verde")==0) 
+            {
+                strcpy((*control).vieneDe, "rojo");
+                (*control).ciclo += (*control).movimiento;
+                (*control).timer=0;
+            }  
+            break;
+    }
+}
+
+void semaforo(controlSemaforo* control, controlSemaforo* controlOtroSemaforo)
+{
+    
+    int estadoVerde=0, estadoAmarillo=1, estadoRojo=2,  
+    estados[3][3]= {
+        {1, 0, 0},  //fila de verde
+        {0, 1, 0},  //fila de amarillo
+        {0, 0, 1}   //fila de rojo
+    };
 
 
+    if(estados[estadoVerde][(*control).ciclo])
+    {
+        printf("Estado: Verde. Cambiando: en %.1fs\n", ((*control).tiempoEstados.verde+1)-(*control).timer);
+        strcpy((*control).estado, "verde");
+    }
+        
+    else if(estados[estadoAmarillo][(*control).ciclo])
+    {
+        printf("Estado: Amarillo. Cambiando: en %.1fs\n", ((*control).tiempoEstados.amarillo+1)-(*control).timer);
+        strcpy((*control).estado, "amarillo");
+    }
+    
+    else if(estados[estadoRojo][(*control).ciclo])
+    {
+        printf("Estado: Rojo. Tiempo transcurrido: %i\n", (*control).timer-1);
+        strcpy((*control).estado, "rojo");
+    }
+/*
+
+    switch((*control).ciclo)
+    {
+        case 0:
+            printf("Estado: Verde. Cambiando: en %.1fs\n", ((*control).tiempoEstados.verde+1)-(*control).timer);
+            strcpy((*control).estado, "verde");
+            break;
+
+        case 1:
+            printf("Estado: Amarillo. Cambiando: en %.1fs\n", ((*control).tiempoEstados.amarillo+1)-(*control).timer);
+            strcpy((*control).estado, "amarillo");
+            break;
+
+        case 2:
+            printf("Estado: Rojo. Tiempo transcurrido: %i\n", (*control).timer-1);
+            strcpy((*control).estado, "rojo");
+            break;
+    }
+*/
+moverCiclo(control, controlOtroSemaforo);
+}
+
+void inicializarSemaforos(controlSemaforo* control, controlSemaforo* controlSecundario, int* sensor)
+{
+    (*control).timer=0;
+    (*controlSecundario).timer=0;
+   
+    
+    printf("Ingrese el tiempo en Verde del Semaforo Principal: "); //el verde del principal no menor a 1
+    (*control).tiempoEstados.verde=validarTiempoInf(1);
+    
+    printf("Ingrese el tiempo en Amarillo del Semaforo Principal: "); //lo mismo con el amarillo
+    (*control).tiempoEstados.amarillo=validarTiempoInf(1);
+    
+    printf("Ingrese el tiempo en Verde del Semaforo Secundario: "); //el verde del secundario no menor a 1, y que no sea mas extendido que la principal
+    (*controlSecundario).tiempoEstados.verde=validarTiempoInfSup(1, (*control).tiempoEstados.verde);
+    
+    printf("Ingrese el tiempo en Amarillo del Semaforo Secundario: ");
+    (*controlSecundario).tiempoEstados.amarillo=validarTiempoInf(1);
+
+
+    printf("Hay autos en la carretera secundaria? (si:1 | no:0): ");
+    scanf("%d", sensor);
+    
+    if((*sensor)==true)
+    {
+         
+        (*control).ciclo=2; //rojo en la principal, que pasen los autos de la secundaria
+        (*controlSecundario).ciclo=0; //verde
+    }
+    else
+    {
+        (*control).tiempoEstados.verde+=5; //extendemos la duracion de verde en el semaforo principal si no hay autos en secundaria
+        (*control).ciclo=0; // verde en la principal y extendemos su estado verde
+        (*controlSecundario).ciclo=2; // rojo en la secundaria
+    }
+}
    
 

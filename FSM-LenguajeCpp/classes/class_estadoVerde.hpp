@@ -5,19 +5,20 @@ class EstadoVerde : virtual public Estado
 {
 public:
 
-    void mostrar(double* timer) override 
+    void mostrar(double timer) override 
     {
-        std::cout << "Estado: Verde. Cambiando en: " << duracion - (*timer) + 1 << std::endl;
+        std::cout << "Estado: Verde. Cambiando en: " << duracion - (timer)+1<< std::endl;
     }
 
-    void setDuracion(double duracionVerde) override 
+    void run(double timer) override
     {
-        duracion = duracionVerde;
+        if(getCiclo()==estado::Verde && timer<duracion)
+        {
+            mostrar(timer);
+        }
+        else
+            rotarEstado();
     }
-
-    void setEstado(bool enVerde) override 
-    {
-        activado = enVerde;
-    }
+    
 };
 #endif //CLASS_ESTADOVERDE_HPP

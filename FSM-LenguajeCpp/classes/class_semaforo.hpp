@@ -1,114 +1,61 @@
 #ifndef CLASS_SEMAFORO_HPP
 #define CLASS_SEMAFORO_HPP
 
-struct Tiempo
-{
-    float verde;
-    float amarillo;
-    //float rojo; el tiempo del rojo depende del estado de la otra carretera
-
-}; //en segundos
-
-
-struct controlSemaforo
-{
-    int ciclo; //3 ciclos, de 0 a 2
-    int movimiento;
-    int timer;
-    int autorizarCambio;
-
-    std::string estado;
-    std::string vieneDe;
-
-    Tiempo tiempoEstados;
-
-};
-
-class Semaforo 
+class Semaforo  
 {
 public:
 
-    //metodos en virtual para que funcione el semaforo
-     void mostrarSemaforo(std::string mensaje)
-     {
-        std::cout << mensaje;
-     }
-
     //establecemos los tiempos con metodos
-    void establecerTiempos(float tiempoVerde, float tiempoAmarillo)
+    void inicializarEstados(double tiempoVerde, double tiempoAmarillo, double tiempoRojo, int ciclo)
     {
-        estadoVerde.setDuracion(tiempoVerde);
-        estadoAmarillo.setDuracion(tiempoAmarillo);
+        verde.setDuracionMax(tiempoVerde);
+        amarillo.setDuracionMax(tiempoAmarillo);
+        rojo.setDuracionMax(tiempoRojo);
+
+        Semaforo::ciclo=ciclo; //puede ser de cualquier objeto
     }
 
-    void moverCiclo(controlSemaforo* control, controlSemaforo* controlOtroSemaforo)
+    //getter de ciclo, para que el otro semaforo sepa el estado
+    int getCiclo()
     {
-        
-
-        switch ((*control).estado[0])
-        {
-        case 'v': // Estado 'verde'
-            if ((*control).timer == (*control).tiempoEstados.verde)
-            {
-                (*control).vieneDe = "verde";
-                (*control).ciclo += (*control).movimiento;
-                (*control).timer = 0;
-                (*control).autorizarCambio = false;
-            }
-            break;
-
-        case 'a': // Estado 'amarillo'
-            if ((*control).timer == (*control).tiempoEstados.amarillo)
-            {
-                (*control).ciclo += (*control).movimiento;
-                (*control).timer = 0;
-                (*control).autorizarCambio = true; // Como voy a salir de amarillo, el otro semáforo puede salir de rojo también
-            }
-            break;
-
-        case 'r': // Estado 'rojo'
-            if (((*controlOtroSemaforo).vieneDe == "verde" && (*controlOtroSemaforo).autorizarCambio) || ((*controlOtroSemaforo).timer == (*controlOtroSemaforo).tiempoEstados.amarillo && (*controlOtroSemaforo).estado == "amarillo" && (*controlOtroSemaforo).vieneDe == "verde"))
-            {
-                (*control).vieneDe = "rojo";
-                (*control).ciclo += (*control).movimiento;
-                (*control).timer = 0;
-            }
-            break;
-        }
+        return ciclo;
     }
-    void semaforo(controlSemaforo* control, controlSemaforo* controlOtroSemaforo, std::string nombreSemaforo)
+    
+    int semaforo(double& timer, std::string nombreSemaforo, int ciclo_otro, int timerOtro)
     { 
-        mostrarSemaforo(nombreSemaforo);
-        switch ((*control).ciclo)
+        std::cout << nombreSemaforo;
+        switch(ciclo)
         {
-            case estado::Verde:
-                estadoVerde.mostrar((*control).timer);
-                (*control).estado = "verde";
+            case 0:
+                verde.run(timer, ciclo, movimiento, ciclo_otro);
+                vieneDe="verde";
                 break;
 
-            case estado::Amarillo:
-                estadoAmarillo.mostrar((*control).timer);
-                (*control).estado = "amarillo";
+            case 1:
+                amarillo.run(timer, ciclo, movimiento, ciclo_otro);
                 break;
 
-            case estado::Rojo:
-                estadoRojo.mostrar((*control).timer);
-                (*control).estado = "rojo";
-                break;
+            case 2:
+                 rojo.run(timer, ciclo, movimiento, ciclo_otro);
+                 vieneDe="rojo";
+                 break;
         }
-        moverCiclo(control, controlOtroSemaforo);
+        return ciclo;
     }
-/*
-    //establecemos los estados con metodos tambien
-    void establecerEstado(bool verde, bool amarillo, bool rojo)
-    {
-        estadoVerde.setEstado(verde);
-        estadoAmarillo.setEstado(amarillo);
-        estadoRojo.setEstado(rojo);
+private:
 
-        timer=1; //Cuando cambiamos el Estado empieza una cuenta regresiva nueva
-    }
-*/
+    EstadoVerde verde;
+    EstadoAmarillo amarillo;
+    EstadoRojo rojo;
+
+    int ciclo;
+    int movimiento;
+
+    std::string vieneDe;
+    std::string estado;
+
+};
+
 /*  
     void cambiarSemaforo(std::string* estadoActual, std::string* otroSemaforo, std::string nombreSemaforo)
     {
@@ -167,17 +114,5 @@ public:
             timer++;
         }
     }*/
-
-protected:
-    
-
-private:
-
-    EstadoVerde estadoVerde;
-    EstadoAmarillo estadoAmarillo;
-    EstadoRojo estadoRojo;
-
-};
-
-
 #endif //CLASS_SEMAFORO_HPP
+

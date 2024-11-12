@@ -1,23 +1,26 @@
 #ifndef CLASS_ESTADOROJO_HPP
 #define CLASS_ESTADOROJO_HPP
 
-class EstadoRojo : virtual public Estado 
+class EstadoRojo : public Estado 
 {
 public:
 
-    void mostrar(double timer) override 
+    void mostrar(const double& timer) override 
     {
         std::cout << "Estado: Rojo. Esperando al otro semaforo. Tiempo Transcurrido:  " << timer-1 << std::endl;
     }
  
-    void run(double timer) override
+    void run(double& timer, int& ciclo, int& movimiento, int ciclo_otro, int timerOtro) override
     {
-        if(getCiclo()==estado::Rojo && timer<duracion)
+        if(ciclo==2) 
         {
             mostrar(timer);
         }
-        else
-            rotarEstado();
+        if((ciclo==2 && ciclo_otro==2) || (ciclo==2 && timerOtro))
+        {
+            timer=0;
+            rotarEstado(ciclo, movimiento);
+        }
     }
 };
 #endif //CLASS_ESTADOROJO_HPP

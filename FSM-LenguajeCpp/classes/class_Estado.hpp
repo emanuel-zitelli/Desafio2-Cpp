@@ -5,57 +5,42 @@ class Estado //clase base de verde, amarillo y rojo
 {
 public: 
 
-    virtual void mostrar(double timer) = 0; // Metodos abstractos, son la base de los estados verde, amarillo y rojo
-    virtual void run(double timer) = 0;
+    virtual void mostrar(const double& timer) = 0; // Metodos abstractos, son la base de los estados verde, amarillo y rojo
+    virtual void run(double& timer, int& ciclo, int& movimiento, int ciclo_otro, int timerOtro) = 0; //la funcionalidad principal de cada estado
     
-    void setCicloActual(int ciclo) //para establecer el ciclo de cada semaforo
+    //getters
+    double getDuracion()
     {
-        Estado::ciclo = ciclo;
+        return duracion;
+    }
+    /*
+    std::string getEstado()
+    {
+        return estado;
+    }
+    */
+    void setDuracionMax(int duracion)
+    {
+        Estado::duracion = duracion;
     }
 
-    void rotarEstado()
+    void rotarEstado(int& ciclo, int& movimiento)
     {
         switch (ciclo) // Controla los cambios de estado, de rojo a amarillo y de amarillo a verde, y luego a la inversa.
         {
-        case extremoCiclo::Comienzo:
+        case 0:
             movimiento = 1;
             break;
 
-        case extremoCiclo::Fin:
+        case 2:
             movimiento = -1;
             break;
         }
 
         ciclo+=movimiento;
     }
-
-    int getCiclo() //para que cada estado pueda consultar en que ciclo estan
-    {
-        return ciclo;
-    }
-
-    int getTimer(int estado) //se pueden obtener los timers para que un semaforo consulte el timer del otro
-    {
-        if(estado==estado::Verde)
-            return timerVerde;
-
-        else if(estado==estado::Amarillo)
-            return timerAmarillo;
-    }
-    
-
 protected:
-    float duracion;
-    float activo;
-    
-    int movimiento;
-    std::string estado;
-    std::string vieneDe;
-
-private:
-    int ciclo; //3 ciclos, de 0 a 2
-    double timerVerde=0;
-    double timerAmarillo=0;
+    double duracion;
 }; 
 
 

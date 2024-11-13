@@ -10,13 +10,11 @@ public:
         std::cout << "Estado: Rojo. Esperando al otro semaforo. Tiempo Transcurrido:  " << timer-1 << std::endl;
     }
  
-    void run(double& timer, int& ciclo, int& movimiento, int ciclo_otro, int timerOtro) override
+    void run(double& timer, int& ciclo, int& movimiento, int ciclo_otro, double timerOtro, double duracionAmarillo, std::string anteriorOtro) override
     {
-        if(ciclo==2) 
-        {
-            mostrar(timer);
-        }
-        if((ciclo==2 && ciclo_otro==2) || (ciclo==2 && timerOtro))
+        mostrar(timer);
+        
+        if((ciclo_otro==2) || (ciclo_otro==1 && timerOtro==duracionAmarillo && anteriorOtro=="verde"))
         {
             timer=0;
             rotarEstado(ciclo, movimiento);

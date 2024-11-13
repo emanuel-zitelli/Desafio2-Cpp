@@ -6,11 +6,10 @@ class Semaforo
 public:
 
     //establecemos los tiempos con metodos
-    void inicializarEstados(double tiempoVerde, double tiempoAmarillo, double tiempoRojo, int ciclo)
+    void inicializarEstados(double tiempoVerde, double tiempoAmarillo, int ciclo)
     {
         verde.setDuracionMax(tiempoVerde);
         amarillo.setDuracionMax(tiempoAmarillo);
-        rojo.setDuracionMax(tiempoRojo);
 
         Semaforo::ciclo=ciclo; //puede ser de cualquier objeto
     }
@@ -21,26 +20,27 @@ public:
         return ciclo;
     }
     
-    int semaforo(double& timer, std::string nombreSemaforo, int ciclo_otro, int timerOtro)
+    //funcionalidad
+    std::string semaforo(double& timer, std::string nombreSemaforo, int ciclo_otro, double timerOtro, double duracionAmarillo, std::string anteriorOtro)
     { 
         std::cout << nombreSemaforo;
         switch(ciclo)
         {
-            case 0:
-                verde.run(timer, ciclo, movimiento, ciclo_otro);
+            case Ciclo::Verde :
+                verde.run(timer, ciclo, movimiento, ciclo_otro, timerOtro, duracionAmarillo, anteriorOtro);
                 vieneDe="verde";
                 break;
 
-            case 1:
-                amarillo.run(timer, ciclo, movimiento, ciclo_otro);
+            case Ciclo::Amarillo :
+                amarillo.run(timer, ciclo, movimiento, ciclo_otro, timerOtro, duracionAmarillo, anteriorOtro);
                 break;
 
-            case 2:
-                 rojo.run(timer, ciclo, movimiento, ciclo_otro);
+            case Ciclo::Rojo :
+                 rojo.run(timer, ciclo, movimiento, ciclo_otro, timerOtro, duracionAmarillo, anteriorOtro);
                  vieneDe="rojo";
                  break;
         }
-        return ciclo;
+        return vieneDe;
     }
 private:
 
@@ -52,8 +52,6 @@ private:
     int movimiento;
 
     std::string vieneDe;
-    std::string estado;
-
 };
 
 /*  

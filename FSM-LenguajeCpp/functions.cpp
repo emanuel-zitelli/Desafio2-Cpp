@@ -41,47 +41,37 @@ double validarTiempo(double limInf) //sobrecarga de funciones, segun el parametr
     
     return dato;
 }
-/*
-void inicializarSemaforo(Semaforo* Principal, Semaforo* Secundaria)
+
+void inicializarSemaforo(Semaforo& principal, Semaforo& secundario, Ingreso& inicializarPrincipal, Ingreso& inicializarSecundario)
 {
     //sensor
     bool hayAutos;
-    //variables para guardar los tiempos
-    double tiempoVerdeP;
-    double tiempoVerdeS;
-    double tiempoAmarilloP;
-    double tiempoAmarilloS;
 
     std::cout << "Ingrese el tiempo en Verde del Semaforo Principal: "; //el verde del principal no menor a 1
-    tiempoVerdeP=validarTiempo(1);
+    inicializarPrincipal.tiempoVerde=validarTiempo(1);
     
     std::cout << "Ingrese el tiempo en Amarillo del Semaforo Principal: "; //lo mismo con el amarillo
-    tiempoAmarilloP=validarTiempo(1);
+    inicializarPrincipal.tiempoAmarillo=validarTiempo(1);
     
-    (*Principal).establecerTiempos(tiempoVerdeP, tiempoAmarilloP);
 
     std::cout << "Ingrese el tiempo en Verde del Semaforo Secundario: "; //el verde del secundario no menor a 1, y que no sea mas extendido que la principal
-    tiempoVerdeS=validarTiempo(1, tiempoVerdeP);
+    inicializarSecundario.tiempoVerde=validarTiempo(1, inicializarPrincipal.tiempoVerde);
     
     std::cout << "Ingrese el tiempo en Amarillo del Semaforo Secundario: ";
-    tiempoAmarilloS=validarTiempo(1);
-
-    (*Secundaria).establecerTiempos(tiempoVerdeS, tiempoAmarilloS);
+    inicializarSecundario.tiempoAmarillo=validarTiempo(1);
 
     std::cout << "Hay autos en la carretera secundaria? (si:1 | no:0): ";
     std::cin >> hayAutos;
-    
+
     if(hayAutos==true)
     {
-        (*Principal).establecerEstado(0, 0, 1); //rojo al comienzo
-        (*Secundaria).establecerEstado(1, 0, 0); //verde, para que pasen los autos
+        principal.inicializarEstados(inicializarPrincipal.tiempoVerde, inicializarPrincipal.tiempoAmarillo, 2); //rojo al comienzo
+        secundario.inicializarEstados(inicializarSecundario.tiempoVerde, inicializarSecundario.tiempoAmarillo, 0); //verde, para que pasen los autos
     }
     else if(hayAutos==false)
     {
-        tiempoVerdeP+=5; //extendemos la duracion de verde en el semaforo principal si no hay autos en secundaria
-        (*Principal).establecerTiempos(tiempoVerdeP, tiempoAmarilloP);
-
-        (*Principal).establecerEstado(1, 0, 0); //rojo al comienzo
-        (*Secundaria).establecerEstado(0, 0, 1);
+        inicializarPrincipal.tiempoVerde+=5; //extendemos la duracion de verde en el semaforo principal si no hay autos en secundaria
+        principal.inicializarEstados(inicializarPrincipal.tiempoVerde, inicializarPrincipal.tiempoAmarillo, 0); //verde al comienzo
+        secundario.inicializarEstados(inicializarSecundario.tiempoVerde, inicializarSecundario.tiempoAmarillo, 2); //rojo, porque no hay autos
     }
-}*/
+}

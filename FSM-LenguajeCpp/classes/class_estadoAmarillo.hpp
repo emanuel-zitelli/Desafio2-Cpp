@@ -10,14 +10,11 @@ public:
         std::cout << "Estado: Amarillo. Cambiando en: " << duracion-(timer)+1 << std::endl;;
     }
 
-    void run(double& timer, int& ciclo, int& movimiento, int ciclo_otro, int timerOtro) override
+    void run(double& timer, int& ciclo, int& movimiento, int ciclo_otro, double timerOtro, double duracionAmarillo, std::string anteriorOtro) override
     {
-        if(ciclo==1) //&& timer<=duracion
-        {
-            mostrar(timer);
-        }
+        mostrar(timer);
 
-        if(ciclo==1 && timer==duracion)
+        if(timer==duracion)
         {
             timer=0;
             rotarEstado(ciclo, movimiento);

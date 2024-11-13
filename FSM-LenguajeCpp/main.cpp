@@ -2,13 +2,12 @@
 
 int main()
 {
-    Semaforo principal;
-    Semaforo secundario;
+    Semaforo principal, secundario;
     double timerPrincipal=0, timerSecundario=0;
+    std::string anteriorPrincipal, anteriorSecundario;
+    Ingreso inicializarPrincipal, inicializarSecundario;
     
-    principal.inicializarEstados(10, 5, 10, 0);
-    secundario.inicializarEstados(5, 5, 15, 2);
-    
+    inicializarSemaforo(principal, secundario, inicializarPrincipal, inicializarSecundario);
     while(true)
     {   
         system("cls");
@@ -16,9 +15,9 @@ int main()
         timerPrincipal++;
         timerSecundario++;
 
-        principal.semaforo(timerPrincipal, "Semaforo Principal ", secundario.getCiclo(), timerSecundario);
+        anteriorPrincipal=principal.semaforo(timerPrincipal, "Semaforo Principal ", secundario.getCiclo(), timerSecundario, inicializarSecundario.tiempoAmarillo, anteriorSecundario);
         std::cout << "\n";
-        secundario.semaforo(timerSecundario, "Semaforo Secundario ", principal.getCiclo(), timerPrincipal);
+        anteriorSecundario=secundario.semaforo(timerSecundario, "Semaforo Secundario ", principal.getCiclo(), timerPrincipal, inicializarPrincipal.tiempoAmarillo, anteriorPrincipal);
 
         std::this_thread::sleep_for(std::chrono::seconds(1)); //le damos una espera de 1 segundo a la ejecucion del programa
     }
